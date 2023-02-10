@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+</head>
+<style>
+    .button {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        margin-left: 20px;
+        text-align: center;
+    }
+    .hiddenButton {
+        color: #FF9900;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        visibility: hidden;
+    }
+    h2 {
+        text-align: center;
+    }
+    input {
+        color: #232F3E;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+    }
+</style>
+<script>
+    async function uploadReceipt() {
+        // Upload receipt and retrieve dishes info
+        let receiptList = document.getElementById("receipt").files;
+        if (receiptList.length === 0) {
+            alert("No Receipt Uploaded");
+            return;
+        }
+        let receipt = receiptList[0]
+        let formData = new FormData();
+        formData.append("receipt", receipt)
+        fetch("/uploadReceipt", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to upload receipt.");
+                }
+                console.log("File uploaded successfully.");
+                displayDishes(response.json())
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    async function displayDishes(dishes) {
+        // Populate dish name and price based on receipt result
+        document.getElementById("dishName");
+        document.getElementById("dishName");
+    }
+
+    async function submitParticipants() {
+
+    }
+</script>
+<body>
+    <h2>Upload Receipt</h2>
+    <form style="text-align:center">
+        <input type="file" class="button" id="receipt">
+        <input type="submit" class="button" value="upload" onclick=uploadReceipt()>
+    </form>
+    <br>
+    <form>
+        <input type="hidden" id="dishName">
+        <input type="hidden" id="participants">
+        <input type="submit" class="hiddenButton" value="Submit" onclick="submitParticipants()">
+    </form>
+
+</body>
+</html>
